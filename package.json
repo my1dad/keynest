@@ -2,6 +2,11 @@
   "name": "code-a",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://keynest0sv2.vercel.app/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/my1dad/keynest.git"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
