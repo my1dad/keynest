@@ -1,0 +1,20 @@
+---
+description: Canonical KeyNest GitHub, Supabase, and Vercel URLs for every push and deploy
+alwaysApply: true
+---
+
+# KeyNest remotes
+
+Always use these links. Do not retarget origin, env, or deploys to older hosts.
+
+- GitHub origin: `https://github.com/my1dad/keynest.git`
+- Supabase: `https://qtmtxwjnipoxtqmxtwtb.supabase.co`
+- Production: `https://keynest0sv2.vercel.app/`
+
+## Push and deploy
+
+- `git push` goes to `origin` → `my1dad/keynest` (`main`).
+- Vercel project is `keynest0sv2`. Production stays `https://keynest0sv2.vercel.app/`.
+- `NEXT_PUBLIC_SUPABASE_URL` must be `https://qtmtxwjnipoxtqmxtwtb.supabase.co`.
+- Never use `ODIOdev/keynest0sv2` as origin or the dead host `mehybyfyulctfqvcovfv.supabase.co`.
+- Never commit `.env.local` or API keys.

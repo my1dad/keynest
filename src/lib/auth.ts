@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseReachable } from "@/lib/supabase/reachable";
 import type { Profile } from "@/lib/auth-types";
 import { AUTH } from "@/lib/auth-routes";
 
@@ -7,11 +8,16 @@ export type { AppRole, AccountType, Profile, Organization, Membership } from "@/
 export { roleLabel } from "@/lib/auth-types";
 
 export async function getUser() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  return user;
+  if (!(await isSupabaseReachable())) return null;
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    return user;
+  } catch {
+    return null;
+  }
 }
 
 export async function getProfile(): Promise<Profile | null> {

@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { createServiceClient } from "@/lib/supabase/admin";
+import { isSupabaseReachable } from "@/lib/supabase/reachable";
 import { getSettings } from "@/lib/db";
 import { normalizeSiteSocialLinks } from "@/lib/social-links";
 import type { ProfileSocialLink } from "@/lib/auth-types";
@@ -11,6 +12,8 @@ import type { ProfileSocialLink } from "@/lib/auth-types";
  */
 export const getPublicSocialLinks = cache(async (): Promise<ProfileSocialLink[]> => {
   const fromSettings = normalizeSiteSocialLinks(getSettings().socialLinks);
+
+  if (!(await isSupabaseReachable())) return fromSettings;
 
   try {
     const admin = createServiceClient();

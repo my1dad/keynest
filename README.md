@@ -29,6 +29,16 @@ npm run dev
 
 Copy `.env.example` to `.env.local` to customize secrets.
 
+## Remotes
+
+| Service | URL |
+|---|---|
+| GitHub | [https://github.com/my1dad/keynest](https://github.com/my1dad/keynest.git) |
+| Production | [https://keynest0sv2.vercel.app/](https://keynest0sv2.vercel.app/) |
+| Supabase | [https://qtmtxwjnipoxtqmxtwtb.supabase.co](https://qtmtxwjnipoxtqmxtwtb.supabase.co) |
+
+Push `main` to `origin` (`my1dad/keynest`). Vercel project `keynest0sv2` deploys that repo to production.
+
 ## What’s included
 
 ### Public site

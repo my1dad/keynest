@@ -5,35 +5,34 @@ import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { KeynestLogo } from "@/components/site/KeynestLogo";
 import { HashScroll, SiteNav, ScrollLink } from "@/components/site/SmoothNav";
-import { createClient } from "@/lib/supabase/client";
 
 function HeaderAuthActions({ onNavigate }: { onNavigate?: () => void }) {
   const router = useRouter();
   const [authed, setAuthed] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const supabase = createClient();
     let mounted = true;
 
-    supabase.auth.getUser().then(({ data }) => {
-      if (mounted) setAuthed(Boolean(data.user));
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setAuthed(Boolean(session?.user));
-    });
+    fetch("/api/auth")
+      .then((res) => (res.ok ? res.json() : { authenticated: false }))
+      .then((data: { authenticated?: boolean }) => {
+        if (mounted) setAuthed(Boolean(data.authenticated));
+      })
+      .catch(() => {
+        if (mounted) setAuthed(false);
+      });
 
     return () => {
       mounted = false;
-      subscription.unsubscribe();
     };
   }, []);
 
   async function logout() {
-    const supabase = createClient();
-    await supabase.auth.signOut();
+    try {
+      await fetch("/api/auth", { method: "DELETE" });
+    } catch {
+      // Keep the header usable if the session endpoint is down.
+    }
     setAuthed(false);
     onNavigate?.();
     router.refresh();
